@@ -56,7 +56,7 @@ export default {
     return {
       contacts: [...contactData],
       //visibleLeft: false,
-      selectedContact: {}
+      selectedContact: {},
     }
   },
 
@@ -72,14 +72,13 @@ export default {
     addContact() {
       console.log(this.form)
       this.selectedContact = {}
-      //this.visibleLeft = true
-      //this.form.open();
       this.sidebar.open()
     },
 
     editContact(contactData) {
-      this.selectedContact = {...contactData}
-      //this.visibleLeft = true
+      console.log('--> editContact', contactData)
+
+      this.selectedContact = contactData
       this.sidebar.open()
     },
 
@@ -147,7 +146,7 @@ export default {
   width: 640px;
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1024px) {
   .grid  {
     flex-direction: column;
 

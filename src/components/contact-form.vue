@@ -6,59 +6,59 @@
     <form class="form">
       <div class="row">
         <div class="input-field">
-          <input id="name" type="text" class="validate" v-model="contactData.name">
+          <input id="name" type="text" class="validate" v-model="formData.name">
           <label for="name" class="active">Name</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="role" type="text" class="validate" v-model="contactData.role">
+          <input id="role" type="text" class="validate" v-model="formData.role">
           <label for="role" class="active">Role</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="company" type="text" class="validate" v-model="contactData.company">
+          <input id="company" type="text" class="validate" v-model="formData.company">
           <label for="company" class="active">Company</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="street" type="text" class="validate" v-model="contactData.street">
+          <input id="street" type="text" class="validate" v-model="formData.street">
           <label for="street" class="active">Street</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="suite" type="text" class="validate" v-model="contactData.suite">
+          <input id="suite" type="text" class="validate" v-model="formData.suite">
           <label for="suite" class="active">Suite</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field city">
-          <input id="city" type="text" class="validate" v-model="contactData.city">
+          <input id="city" type="text" class="validate" v-model="formData.city">
           <label for="city" class="active">City</label>
         </div>
 
         <div class="input-field state">
-          <input id="state" type="text" class="validate" v-model="contactData.state">
+          <input id="state" type="text" class="validate" v-model="formData.state">
           <label for="state" class="active">State</label>
         </div>
 
         <div class="input-field zip">
-          <input id="zip" type="text" class="validate" v-model="contactData.zip">
+          <input id="zip" type="text" class="validate" v-model="formData.zip">
           <label for="zip" class="active">Zip</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="phone" type="text" class="validate" v-model="contactData.phone">
+          <input id="phone" type="text" class="validate" v-model="formData.phone">
           <label for="phone" class="active">Phone</label>
         </div>
       </div>
@@ -134,8 +134,6 @@ export default {
     }
   },
 
-  emits: ['save'],
-
   data() {
     return {
       formData: {}
@@ -143,12 +141,20 @@ export default {
   },
 
   created() {
-    this.formData = this.contactData
+    this.formData = {...this.contactData}
   },
 
   mounted() {
     M.updateTextFields()
   },
+
+  /*
+  watch: {
+    contactData() {
+      console.log('contactData'. this.$props.contactData)
+    }
+  },
+  */
 
   methods: {
     save() {
