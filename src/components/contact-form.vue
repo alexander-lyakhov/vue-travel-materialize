@@ -1,131 +1,111 @@
 ﻿<template>
   <div class="contact-form modal-content">
-    <h2 v-if="formData.id">Editcontact</h2>
+    <h2 v-if="formData.id">Edit contact</h2>
     <h2 v-else>Add new contact</h2>
 
-    <form class="form">
+    <img class="avatar" :src="avatar" :alt="formData.name" v-cloak/>
+
+    <form ref="form" class="form" @submit.prevent="save">
       <div class="row">
         <div class="input-field">
-          <input id="name" type="text" class="validate" v-model="formData.name">
+          <input id="name" type="text" class="validate" required v-model="formData.name">
           <label for="name" class="active">Name</label>
+          <span class="helper-text" data-error="Name is required"></span>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="role" type="text" class="validate" v-model="formData.role">
+          <input id="role" type="text" class="validate" required v-model="formData.role">
           <label for="role" class="active">Role</label>
+          <span class="helper-text" data-error="Role is required"></span>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="company" type="text" class="validate" v-model="formData.company">
+          <input id="company" type="text" class="validate" required v-model="formData.company">
           <label for="company" class="active">Company</label>
+          <span class="helper-text" data-error="Company is required"></span>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="street" type="text" class="validate" v-model="formData.street">
+          <input id="street" type="text" class="validate" required v-model="formData.street">
           <label for="street" class="active">Street</label>
+          <span class="helper-text" data-error="Street is required"></span>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="suite" type="text" class="validate" v-model="formData.suite">
+          <input id="suite" type="text" class="validate" required v-model="formData.suite">
           <label for="suite" class="active">Suite</label>
+          <span class="helper-text" data-error="Suite is required"></span>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field city">
-          <input id="city" type="text" class="validate" v-model="formData.city">
+          <input id="city" type="text" class="validate" required v-model="formData.city">
           <label for="city" class="active">City</label>
+          <span class="helper-text" data-error="City is required"></span>
         </div>
 
         <div class="input-field state">
-          <input id="state" type="text" class="validate" v-model="formData.state">
+          <input id="state" type="text" class="validate" required v-model="formData.state">
           <label for="state" class="active">State</label>
-        </div>
-
-        <div class="input-field zip">
-          <input id="zip" type="text" class="validate" v-model="formData.zip">
-          <label for="zip" class="active">Zip</label>
+          <span class="helper-text" data-error="required"></span>
         </div>
       </div>
 
       <div class="row">
-        <div class="input-field">
-          <input id="phone" type="text" class="validate" v-model="formData.phone">
+        <div class="input-field zip">
+          <masked-input
+            id="zip"
+            class="validate"
+            v-model="formData.zip"
+            mask="11111"
+            type="text"
+            placeholder="99999"
+            required
+          />
+          <label for="zip" class="active">Zip</label>
+          <span class="helper-text" data-error="required"></span>
+        </div>
+
+        <div class="input-field phone">
+          <masked-input
+            id="phone"
+            class="validate"
+            v-model="formData.phone"
+            mask="(111) 111-1111"
+            type="text"
+            placeholder="(999) 99-9999"
+            required
+          />
           <label for="phone" class="active">Phone</label>
+          <span class="helper-text" data-error="Phone is required"></span>
         </div>
       </div>
       <div class="form-footer">
-        <a class="btn blue" @click.prevent="save">Submit</a>
-        <a class="btn grey" @click.prevent="$emit('close')">Cancel</a>
+        <button type="submit" class="btn blue">Submit</button>
+        <button class="btn grey" @click.prevent="cancel">Cancel</button>
       </div>
-
-      <!--
-      <div class="p-fluid">
-        <div class="p-field">
-          <label for="inputtext">Name</label>
-          <InputText id="inputtext" type="text" v-model="formData.name" />
-        </div>
-
-        <div class="p-field">
-          <label for="inputtext">Role</label>
-          <InputText id="inputtext" type="text" v-model="formData.role" />
-        </div>
-
-        <div class="p-field">
-          <label for="inputtext">Company</label>
-          <InputText id="inputtext" type="text" v-model="formData.company" />
-        </div>
-
-        <div class="p-field">
-          <label for="inputtext">Street</label>
-          <InputText id="inputtext" type="text" v-model="formData.street" />
-        </div>
-
-        <div class="p-field suite">
-          <label for="inputtext">Suite</label>
-          <InputText id="inputtext" type="text" v-model="formData.suite" />
-        </div>
-
-        <div class="p-field city">
-          <label for="inputtext">City</label>
-          <InputText id="inputtext" type="text" v-model="formData.city" />
-        </div>
-
-        <div class="p-field state">
-          <label for="inputtext">State</label>
-          <InputText id="inputtext" type="text" v-model="formData.state" />
-        </div>
-
-        <div class="p-field zip">
-          <label for="inputtext">Zip</label>
-          <InputMask mask="99999" v-model="formData.zip" placeholder="99999" />
-        </div>
-
-        <div class="p-field">
-          <label for="inputtext">Phone</label>
-          <InputMask mask="(999) 999-9999" v-model="formData.phone" placeholder="(999) 999-9999" />
-        </div>
-      </div>
-      <div class="form-footer">
-        <Button label="Save" class="btn-submit p-button-raised" @click="save"/>
-      </div>
-      -->
     </form>
   </div>
 </template>
 
 <script>
+import maskedInput from 'vue-masked-input'
 
 export default {
   name: 'contact-form',
+
+  components: {
+    maskedInput
+  },
 
   props: {
     contactData: {
@@ -140,29 +120,35 @@ export default {
     }
   },
 
-  created() {
-    this.formData = {...this.contactData}
-  },
 
-  mounted() {
-    M.updateTextFields()
-  },
-
-  /*
   watch: {
-    contactData() {
-      console.log('contactData'. this.$props.contactData)
+    contactData(value) {
+      console.log(value)
+      this.$nextTick(M.updateTextFields)
+      this.formData = {...this.contactData}
     }
   },
-  */
+
+  computed: {
+    avatar() {
+      return this.formData.avatar
+        ? require(`@/assets/${this.formData.avatar}`)
+        : require('@/assets/default.png')
+    }
+  },
 
   methods: {
     save() {
       if (!this.formData.id) {
         this.formData.id = Date.now().toString(26)
       }
-      console.log({...this.formData})
       this.$emit('save', this.formData)
+    },
+
+    cancel() {
+      this.$refs.form.reset()
+      this.formData = {}
+      this.$emit('close')
     }
   }
 }
@@ -170,13 +156,28 @@ export default {
 
 <style lang="scss" scoped>
 
+[v-cloak] {
+  display:none;
+}
+
 .contact-form {
   padding: 1.5rem;
+  position: relative;
 
   h2 {
     font-size: 1.5rem;
     margin: 0;
     padding-bottom: 1.5rem;
+  }
+
+  .avatar {
+    background: #099;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
   }
 }
 
@@ -188,19 +189,24 @@ export default {
   .input-field {
     &.city {
       @extend .inline;
-      width: 60%;
+      width: 85%;
       margin-right: 5%;
     }
 
     &.state {
       @extend .inline;
       width: 10%;
-      margin-right: 5%;
     }
 
     &.zip {
       @extend .inline;
       width: 20%;
+      margin-right: 5%;
+    }
+
+    &.phone {
+      @extend .inline;
+      width: 75%;
     }
   }
 

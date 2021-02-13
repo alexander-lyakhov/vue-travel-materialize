@@ -10,23 +10,6 @@
       />
       <div class="contact add-contact" @click="addContact"></div>
     </div>
-    <!--
-    <sidebar v-model:visible="visibleLeft" class="p-sidebar-md" position="left">
-      <contact-form
-        :contact-data="selectedContact"
-        @save="saveContact"
-      />
-    </sidebar>
-    -->
-    <!--
-    <div id="modal" class="modal" ref="contact-form">
-      <contact-form
-        :contact-data="selectedContact"
-        @save="saveContact"
-      />
-    </div>
-    -->
-
     <div class="sidenav" ref="sidebar">
       <contact-form
         :contact-data="selectedContact"
@@ -41,8 +24,9 @@
 
 import contactCard from '@/components/contact-card'
 import contactForm from '@/components/contact-form'
-
 import contactData from '@/data.js'
+
+import swal from 'sweetalert2'
 
 export default {
   name: 'App',
@@ -55,48 +39,55 @@ export default {
   data() {
     return {
       contacts: [...contactData],
-      //visibleLeft: false,
       selectedContact: {},
     }
   },
 
   mounted() {
-    //M.Modal.init(this.$refs['contact-form'])
     M.Sidenav.init(this.$refs.sidebar)
-
-    //this.form = M.Modal.getInstance(this.$refs['contact-form'])
     this.sidebar = M.Sidenav.getInstance(this.$refs.sidebar)
+  },
+
+  beforeDestroy() {
+    if (this.sidebar && this.sidebar.destroy) {
+      this.sidebar.destroy();
+    }
   },
 
   methods: {
     addContact() {
-      console.log(this.form)
       this.selectedContact = {}
       this.sidebar.open()
     },
 
     editContact(contactData) {
-      console.log('--> editContact', contactData)
-
-      this.selectedContact = contactData
+      this.selectedContact = {...contactData}
       this.sidebar.open()
     },
 
     removeContact(id) {
-      this.contacts = this.contacts.filter(el => el.id !== id)
+      swal.fire({
+        title: 'Delete contact?',
+        icon: 'warning',
+        showDenyButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+      })
+      .then(res => {
+        if (res.isConfirmed) {
+          this.contacts = this.contacts.filter(el => el.id !== id)
+        }
+      })
     },
 
     saveContactForm(contactData) {
-      console.log(contactData)
       let contactIndex = this.contacts.findIndex(item => item.id === contactData.id)
 
-      if (contactIndex !== -1) {
-        this.contacts[contactIndex] = contactData
-      } else {
-        this.contacts.push(contactData)
-      }
-      //this.visibleLeft = false
-      this.sidebar.close()
+      contactIndex !== -1
+        ? this.$set(this.contacts, contactIndex, contactData)
+        : this.contacts.push(contactData)
+
+      this.closeContactForm()
     },
 
     closeContactForm() {
@@ -142,11 +133,10 @@ export default {
 }
 
 .sidenav {
-  //width: auto;
   width: 640px;
 }
 
-@media screen and (max-width: 1024px) {
+@include mobile() {
   .grid  {
     flex-direction: column;
 
