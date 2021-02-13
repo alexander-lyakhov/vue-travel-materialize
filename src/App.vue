@@ -8,7 +8,7 @@
         @edit="editContact"
         @remove="removeContact"
       />
-      <div class="add-contact" @click="addContact"></div>
+      <div class="contact add-contact" @click="addContact"></div>
     </div>
     <!--
     <sidebar v-model:visible="visibleLeft" class="p-sidebar-md" position="left">
@@ -18,10 +18,20 @@
       />
     </sidebar>
     -->
+    <!--
     <div id="modal" class="modal" ref="contact-form">
       <contact-form
         :contact-data="selectedContact"
         @save="saveContact"
+      />
+    </div>
+    -->
+
+    <div class="sidenav" ref="sidebar">
+      <contact-form
+        :contact-data="selectedContact"
+        @save="saveContactForm"
+        @close="closeContactForm"
       />
     </div>
   </div>
@@ -51,8 +61,11 @@ export default {
   },
 
   mounted() {
-    M.Modal.init(this.$refs['contact-form'])
-    this.form = M.Modal.getInstance(this.$refs['contact-form'])
+    //M.Modal.init(this.$refs['contact-form'])
+    M.Sidenav.init(this.$refs.sidebar)
+
+    //this.form = M.Modal.getInstance(this.$refs['contact-form'])
+    this.sidebar = M.Sidenav.getInstance(this.$refs.sidebar)
   },
 
   methods: {
@@ -60,19 +73,22 @@ export default {
       console.log(this.form)
       this.selectedContact = {}
       //this.visibleLeft = true
-      this.form.open();
+      //this.form.open();
+      this.sidebar.open()
     },
 
     editContact(contactData) {
       this.selectedContact = {...contactData}
       //this.visibleLeft = true
+      this.sidebar.open()
     },
 
     removeContact(id) {
       this.contacts = this.contacts.filter(el => el.id !== id)
     },
 
-    saveContact(contactData) {
+    saveContactForm(contactData) {
+      console.log(contactData)
       let contactIndex = this.contacts.findIndex(item => item.id === contactData.id)
 
       if (contactIndex !== -1) {
@@ -80,8 +96,12 @@ export default {
       } else {
         this.contacts.push(contactData)
       }
-
       //this.visibleLeft = false
+      this.sidebar.close()
+    },
+
+    closeContactForm() {
+      this.sidebar.close()
     }
   }
 };
@@ -122,12 +142,28 @@ export default {
   }
 }
 
+.sidenav {
+  //width: auto;
+  width: 640px;
+}
+
 @media screen and (max-width: 1080px) {
   .grid  {
     flex-direction: column;
 
     .contact {
       width: auto;
+    }
+  }
+
+  .sidenav {
+    background: #f0f0f0;
+    width: 100%;
+
+    .contact-form {
+      background: #fff;
+      max-width: 640px;
+      margin: auto;
     }
   }
 }

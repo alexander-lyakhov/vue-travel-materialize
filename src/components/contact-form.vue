@@ -6,65 +6,65 @@
     <form class="form">
       <div class="row">
         <div class="input-field">
-          <input id="name" type="text" class="validate">
-          <label for="name">Name</label>
+          <input id="name" type="text" class="validate" v-model="contactData.name">
+          <label for="name" class="active">Name</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="role" type="text" class="validate">
-          <label for="role">Role</label>
+          <input id="role" type="text" class="validate" v-model="contactData.role">
+          <label for="role" class="active">Role</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="company" type="text" class="validate">
-          <label for="company">Company</label>
+          <input id="company" type="text" class="validate" v-model="contactData.company">
+          <label for="company" class="active">Company</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="street" type="text" class="validate">
-          <label for="street">Street</label>
+          <input id="street" type="text" class="validate" v-model="contactData.street">
+          <label for="street" class="active">Street</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="suite" type="text" class="validate">
-          <label for="suite">Suite</label>
+          <input id="suite" type="text" class="validate" v-model="contactData.suite">
+          <label for="suite" class="active">Suite</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field city">
-          <input id="city" type="text" class="validate">
-          <label for="city">City</label>
+          <input id="city" type="text" class="validate" v-model="contactData.city">
+          <label for="city" class="active">City</label>
         </div>
 
         <div class="input-field state">
-          <input id="state" type="text" class="validate">
-          <label for="state">State</label>
+          <input id="state" type="text" class="validate" v-model="contactData.state">
+          <label for="state" class="active">State</label>
         </div>
 
         <div class="input-field zip">
-          <input id="zip" type="text" class="validate">
-          <label for="zip">Zip</label>
+          <input id="zip" type="text" class="validate" v-model="contactData.zip">
+          <label for="zip" class="active">Zip</label>
         </div>
       </div>
 
       <div class="row">
         <div class="input-field">
-          <input id="phone" type="text" class="validate">
-          <label for="phone">Phone</label>
+          <input id="phone" type="text" class="validate" v-model="contactData.phone">
+          <label for="phone" class="active">Phone</label>
         </div>
       </div>
       <div class="form-footer">
-        <a class="waves-effect waves-light btn blue">Submit</a>
-        <a class="waves-effect waves-light btn grey">Cancel</a>
+        <a class="btn blue" @click.prevent="save">Submit</a>
+        <a class="btn grey" @click.prevent="$emit('close')">Cancel</a>
       </div>
 
       <!--
@@ -127,9 +127,6 @@
 export default {
   name: 'contact-form',
 
-  components: {
-  },
-
   props: {
     contactData: {
       type: Object,
@@ -149,11 +146,16 @@ export default {
     this.formData = this.contactData
   },
 
+  mounted() {
+    M.updateTextFields()
+  },
+
   methods: {
     save() {
       if (!this.formData.id) {
         this.formData.id = Date.now().toString(26)
       }
+      console.log({...this.formData})
       this.$emit('save', this.formData)
     }
   }
@@ -163,14 +165,20 @@ export default {
 <style lang="scss" scoped>
 
 .contact-form {
-  //padding: 1rem;
-}
+  padding: 1.5rem;
 
-h2 {
-  font-size: 1.5rem;
+  h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding-bottom: 1.5rem;
+  }
 }
 
 .form {
+  .row {
+    margin-bottom: 10px;
+  }
+
   .input-field {
     &.city {
       @extend .inline;
