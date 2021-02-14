@@ -1,6 +1,6 @@
 # vue-travel-materialize
 
-### [Live Demo](http://alexander-lyakhov.github.io/vue-travel-materialize/index.html)
+### [Live Demo](http://alexander-lyakhov.github.io/vue-travel-materialize/)
 
 ## Project setup
 ```
