@@ -1,67 +1,65 @@
 ﻿<template>
   <div class="contact-form modal-content">
-    <h2 v-if="formData.id">Edit contact</h2>
-    <h2 v-else>Add new contact</h2>
+    <div class="row">
+      <h2 class="col" v-if="formData.id">Edit contact</h2>
+      <h2 class="col" v-else>Add new contact</h2>
+    </div>
 
     <img class="avatar" :src="avatar" :alt="formData.name" v-cloak/>
 
     <form ref="form" class="form" @submit.prevent="save">
       <div class="row">
-        <div class="input-field">
+        <div class="input-field col s12 m12">
           <input id="name" type="text" class="validate" required v-model="formData.name">
           <label for="name" class="active">Name</label>
           <span class="helper-text" data-error="Name is required"></span>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="input-field">
+        <div class="input-field col s12 m12">
           <input id="role" type="text" class="validate" required v-model="formData.role">
           <label for="role" class="active">Role</label>
           <span class="helper-text" data-error="Role is required"></span>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="input-field">
+        <div class="input-field col s12 m12">
           <input id="company" type="text" class="validate" required v-model="formData.company">
           <label for="company" class="active">Company</label>
           <span class="helper-text" data-error="Company is required"></span>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="input-field">
+        <div class="input-field col s12 m12">
           <input id="street" type="text" class="validate" required v-model="formData.street">
           <label for="street" class="active">Street</label>
           <span class="helper-text" data-error="Street is required"></span>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="input-field">
+        <div class="input-field col s12 m12">
           <input id="suite" type="text" class="validate" required v-model="formData.suite">
           <label for="suite" class="active">Suite</label>
           <span class="helper-text" data-error="Suite is required"></span>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="input-field city">
+        <div class="input-field col s12 m10">
           <input id="city" type="text" class="validate" required v-model="formData.city">
           <label for="city" class="active">City</label>
           <span class="helper-text" data-error="City is required"></span>
         </div>
 
-        <div class="input-field state">
-          <input id="state" type="text" class="validate" required v-model="formData.state">
+        <div class="input-field col s12 m2">
+          <masked-input
+            id="state"
+            class="validate"
+            v-model="formData.state"
+            mask="AA"
+            type="text"
+            placeholder="AA"
+            required
+          />
           <label for="state" class="active">State</label>
           <span class="helper-text" data-error="required"></span>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="input-field zip">
+        <div class="input-field col s4 m3">
           <masked-input
             id="zip"
             class="validate"
@@ -75,7 +73,7 @@
           <span class="helper-text" data-error="required"></span>
         </div>
 
-        <div class="input-field phone">
+        <div class="input-field col s8 m9">
           <masked-input
             id="phone"
             class="validate"
@@ -89,6 +87,7 @@
           <span class="helper-text" data-error="Phone is required"></span>
         </div>
       </div>
+
       <div class="form-footer">
         <button type="submit" class="btn blue">Submit</button>
         <button class="btn grey" @click.prevent="cancel">Cancel</button>
@@ -120,10 +119,8 @@ export default {
     }
   },
 
-
   watch: {
     contactData(value) {
-      console.log(value)
       this.$nextTick(M.updateTextFields)
       this.formData = {...this.contactData}
     }
@@ -161,13 +158,13 @@ export default {
 }
 
 .contact-form {
-  padding: 1.5rem;
+  padding: 1rem;
   position: relative;
 
   h2 {
     font-size: 1.5rem;
+    line-height: 2.5;
     margin: 0;
-    padding-bottom: 1.5rem;
   }
 
   .avatar {
@@ -184,30 +181,6 @@ export default {
 .form {
   .row {
     margin-bottom: 10px;
-  }
-
-  .input-field {
-    &.city {
-      @extend .inline;
-      width: 85%;
-      margin-right: 5%;
-    }
-
-    &.state {
-      @extend .inline;
-      width: 10%;
-    }
-
-    &.zip {
-      @extend .inline;
-      width: 20%;
-      margin-right: 5%;
-    }
-
-    &.phone {
-      @extend .inline;
-      width: 75%;
-    }
   }
 
   &-footer {

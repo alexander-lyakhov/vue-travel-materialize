@@ -12,6 +12,7 @@
     </div>
     <div class="sidenav" ref="sidebar">
       <contact-form
+        ref="contact-form"
         :contact-data="selectedContact"
         @save="saveContactForm"
         @close="closeContactForm"
@@ -44,7 +45,9 @@ export default {
   },
 
   mounted() {
-    M.Sidenav.init(this.$refs.sidebar)
+    M.Sidenav.init(this.$refs.sidebar, {
+      onCloseStart: () => this.$refs['contact-form'].cancel()
+    })
     this.sidebar = M.Sidenav.getInstance(this.$refs.sidebar)
   },
 
