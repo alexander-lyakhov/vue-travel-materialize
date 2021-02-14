@@ -176,6 +176,12 @@ export default {
     top: 1rem;
     right: 1.5rem;
   }
+
+  @include mobile() {
+    background: #fff;
+    max-width: 640px;
+    margin: auto;
+  }
 }
 
 .form {

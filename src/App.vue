@@ -106,6 +106,14 @@ export default {
   display: flex;
   flex-wrap: wrap;
   padding: .5rem;
+
+  @include mobile() {
+    flex-direction: column;
+
+    .contact {
+      width: auto;
+    }
+  }
 }
 
 .add-contact {
@@ -137,26 +145,10 @@ export default {
 
 .sidenav {
   width: 640px;
-}
 
-@include mobile() {
-  .grid  {
-    flex-direction: column;
-
-    .contact {
-      width: auto;
-    }
-  }
-
-  .sidenav {
+  @include mobile() {
     background: #f0f0f0;
     width: 100%;
-
-    .contact-form {
-      background: #fff;
-      max-width: 640px;
-      margin: auto;
-    }
   }
 }
 </style>
