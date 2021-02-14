@@ -145,6 +145,7 @@ export default {
 
 .sidenav {
   width: 640px;
+  padding: 0;
 
   @include mobile() {
     background: #f0f0f0;
