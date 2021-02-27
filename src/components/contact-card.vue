@@ -56,7 +56,6 @@ export default {
   font-size: .875rem;
   color: #404040;
   background: #fff;
-  border: 1px solid #e0e0e0;
 
   &__avatar {
     text-align: center;

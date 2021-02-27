@@ -119,27 +119,23 @@ export default {
 .add-contact {
   @extend .base-card;
 
-  background: #e8e8e8;
+  background: #c0c0c0;
   border: none;
   cursor: pointer;
 
   &:after {
-    content: '+';
-    font: 2.5rem arial;
-    color: #c0c0c0;
-    border: 3px solid #c0c0c0;
-    border-radius: 50%;
+    @extend .center-center;
+
+    content: 'Add New';
+    font: 2.5rem verdana, arial;
+    color: #808080;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
-    @extend .center-center;
   }
 
-  &:hover:after {
-    color: #090;
-    border-color: #090;
+  &:hover {
+    background: #c8c8c8;
   }
 }
 
